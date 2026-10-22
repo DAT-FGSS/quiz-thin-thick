@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>粗幼線技巧測試｜粉嶺官立中學 DAT</title>
+<style>
+  :root {
+    --bg: #f3f6f4;
+    --panel: #ffffff;
+    --ink: #1a1a1a;
+    --muted: #475569;
+    --green: #0A7A4F;
+    --green-dark: #065f3c;
+    --accent: #dc2626;
+    --accent-dark: #991b1b;
+    --border: #c5d0ca;
+    --thin: #334155;
+    --shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    min-height: 100%;
+    font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", "Heiti TC", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  body { padding: 16px 16px 40px; }
+
+  .brand-wrap {
+    max-width: 920px;
+    margin: 0 auto 14px;
+  }
+  a.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: var(--shadow);
+  }
+  a.brand:hover .school, a.brand:hover .dat { opacity: 0.85; }
+  a.brand .crest {
+    width: 56px; height: 56px; object-fit: contain; flex-shrink: 0;
+    background: #fff; border-radius: 8px;
+  }
+  a.brand .titles { min-width: 0; }
+  a.brand .school {
+    font-size: 1.05rem; font-weight: 800; color: #111; line-height: 1.3;
+  }
+  a.brand .dat {
+    margin-top: 2px; font-size: 0.95rem; font-weight: 800; color: var(--green); line-height: 1.3;
+  }
+  .lesson-title {
+    max-width: 920px;
+    margin: 0 auto 16px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--accent-dark);
+    padding-left: 4px;
+  }
+
+  .card {
+    max-width: 920px;
+    margin: 0 auto;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 18px 22px;
+    box-shadow: var(--shadow);
+  }
+  .hidden { display: none !important; }
+
+  .screen h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  .screen p.lead {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .field {
+    flex: 1 1 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .field input {
+    font: inherit;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 12px 14px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+    background: #fafcfa;
+  }
+  .field input:focus { border-color: var(--green); }
+  .rules {
+    background: #f0fdf6;
+    border: 1px solid #b7e4c7;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #14532d;
+  }
+  .rules strong { color: var(--green-dark); }
+
+  .btn {
+    appearance: none;
+    border: none;
+    font: inherit;
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 12px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.15s;
+    min-height: 48px;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-primary { background: var(--green); color: #fff; }
+  .btn-primary:hover:not(:disabled) { background: var(--green-dark); }
+  .btn-danger { background: var(--accent); color: #fff; }
+  .btn-danger:hover:not(:disabled) { background: var(--accent-dark); }
+  .btn-ghost {
+    background: #fff;
+    color: var(--ink);
+    border: 2px solid var(--border);
+  }
+  .btn-ghost:hover:not(:disabled) { border-color: #94a3a0; }
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .test-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .meta {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .timer {
+    font-variant-numeric: tabular-nums;
+    font-size: 1.65rem;
+    font-weight: 900;
+    color: var(--accent-dark);
+    background: #fef2f2;
+    border: 2px solid #fecaca;
+    border-radius: 12px;
+    padding: 6px 14px;
+    letter-spacing: 0.04em;
+  }
+  .timer.warn { color: #fff; background: var(--accent); border-color: var(--accent-dark); animation: pulse 1s infinite; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.75; }
+  }
+
+  .svg-wrap {
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 8px;
+    margin-bottom: 14px;
+    overflow: auto;
+  }
+  .svg-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: min(62vh, 560px);
+    touch-action: manipulation;
+  }
+  .edge {
+    stroke: transparent;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    fill: none;
+    pointer-events: none;
+  }
+  .edge.selected {
+    stroke: var(--accent);
+    stroke-width: 5.5;
+  }
+  .hit {
+    stroke: transparent;
+    stroke-width: 18;
+    stroke-linecap: round;
+    fill: none;
+    cursor: pointer;
+    pointer-events: stroke;
+  }
+  .hit:hover + .edge:not(.selected),
+  .hit:focus + .edge:not(.selected) {
+    stroke: #64748b;
+    stroke-width: 3;
+  }
+  .frozen .hit { pointer-events: none; cursor: default; }
+
+  .hint-bar {
+    font-size: 0.86rem;
+    color: var(--muted);
+    margin-bottom: 12px;
+    line-height: 1.45;
+  }
+
+  .result-score {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--green);
+    margin: 8px 0 12px;
+  }
+  .result-score.bad { color: var(--accent-dark); }
+  .result-msg {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.55;
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    border-radius: 12px;
+  }
+  .result-msg.ok {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+  }
+  .result-msg.bad {
+    background: #fef2f2;
+    color: #7f1d1d;
+    border: 1px solid #fecaca;
+  }
+  .upload-note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  footer.page-foot {
+    max-width: 920px;
+    margin: 22px auto 0;
+    text-align: center;
+  }
+  footer.page-foot a.back-dat {
+    display: inline-block;
+    font-weight: 800;
+    color: var(--green);
+    text-decoration: none;
+    border-bottom: 2px solid var(--green);
+    padding-bottom: 2px;
+  }
+  footer.page-foot a.back-dat:hover { opacity: 0.8; }
+
+  @media (max-width: 560px) {
+    a.brand .crest { width: 48px; height: 48px; }
+    a.brand .school { font-size: 0.95rem; }
+    a.brand .dat { font-size: 0.88rem; }
+    .timer { font-size: 1.35rem; }
+    .result-score { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="brand-wrap">
+  <a class="brand" href="https://dat-fgss.github.io/Home/" title="返回 DAT 主網站">
+    <img class="crest" src="assets/logo-crest.png" width="56" height="56" alt="粉嶺官立中學校徽" />
+    <span class="titles">
+      <span class="school">粉嶺官立中學</span>
+      <span class="dat">設計與應用科技科 (DAT)</span>
+    </span>
+  </a>
+</div>
+<div class="lesson-title">粗幼線技巧測試</div>
+
+<!-- START -->
+<section class="card screen" id="screen-start">
+  <h2>開始測試</h2>
+  <p class="lead">請先輸入班別同學號。測試限時 <strong>3 分鐘</strong>：喺立體圖上面，點擊你認為<strong>應該加粗</strong>嘅邊；選錯可以再按一次取消。限時完會自動繳交。</p>
+  <div class="rules">
+    <strong>粗幼線法則（溫習）：</strong><br />
+    · 兩邊面都見得到 → <strong>幼線</strong><br />
+    · 只見一面／外形輪廓 → <strong>粗線</strong><br />
+    · 通孔開口形成剪影嘅邊，通常都要加粗
+  </div>
+  <div class="form-row">
+    <div class="field">
+      <label for="className">班別</label>
+      <input id="className" type="text" autocomplete="off" placeholder="例如：3A" maxlength="20" />
+    </div>
+    <div class="field">
+      <label for="studentId">學號</label>
+      <input id="studentId" type="text" autocomplete="off" placeholder="例如：12" maxlength="20" />
+    </div>
+  </div>
+  <div class="btn-row">
+    <button type="button" class="btn btn-primary" id="btn-start">開始測試</button>
+  </div>
+</section>
+
+<!-- TEST -->
+<section class="card screen hidden" id="screen-test">
+  <div class="test-bar">
+    <div class="meta" id="student-meta"></div>
+    <div class="timer" id="timer" aria-live="polite">3:00</div>
+  </div>
+  <p class="hint-bar">點擊邊線令佢變成<strong style="color:#dc2626">粗紅色</strong>＝你認為要加粗；再點一次取消。可用「重設全部」清空。</p>
+  <div class="svg-wrap" id="svg-wrap">
+    <!-- SVG injected by JS -->
+  </div>
+  <div class="btn-row">
+    <button type="button" class="btn btn-ghost" id="btn-reset">重設全部</button>
+    <button type="button" class="btn btn-danger" id="btn-submit">繳交答案</button>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section class="card screen hidden" id="screen-result">
+  <h2>測試結果</h2>
+  <div class="meta" id="result-meta"></div>
+  <div class="result-score" id="result-score">0/12</div>
+  <div class="result-msg" id="result-msg"></div>
+  <div class="svg-wrap frozen" id="result-svg-wrap"></div>
+  <p class="upload-note" id="upload-note"></p>
+  <div class="btn-row" style="margin-top:14px">
+    <button type="button" class="btn btn-ghost" id="btn-retry">再測一次</button>
+  </div>
+</section>
+
+<footer class="page-foot">
+  <a class="back-dat" href="https://dat-fgss.github.io/Home/">返回DAT網頁</a>
+</footer>
+
+<script>
+/* 答題鍵：12 條外形／剪影粗線（見 EDGES 中 thick:true）*/
+(function () {
+  'use strict';
+
+  // ========== 設定：貼上 Google Apps Script 網頁應用程式網址 ==========
+  const SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwA-uHiZTp0gwVYZtG6S9aZMub8dR-i3GIspgWF0NYFBvjAAuS5MHiO-ZmYeDTpSZh2bg/exec';
+
+  const QUIZ_SECONDS = 180;
+  const DAT_HOME = 'https://dat-fgss.github.io/Home/';
+
+  // Edges digitized from original figure.png (269×269); PNG is the visible drawing
+  const FIG_W = 269;
+  const FIG_H = 269;
+
+  const EDGES = [
+    { id: 'P_top_back', a: [14, 135], b: [137, 61], thick: true },
+    { id: 'P_bottom_front', a: [36, 258], b: [165, 186], thick: true },
+    { id: 'P_top_front', a: [36, 147], b: [163, 77], thick: false },
+    { id: 'P_left_back_v', a: [14, 133], b: [14, 244], thick: true },
+    { id: 'T_left_v', a: [186, 199], b: [185, 89], thick: false },
+    { id: 'T_right_v', a: [258, 157], b: [259, 47], thick: true },
+    { id: 'P_left_front_v', a: [37, 257], b: [39, 147], thick: false },
+    { id: 'P_right_v', a: [162, 185], b: [162, 76], thick: false },
+    { id: 'H_front_top', a: [74, 169], b: [123, 138], thick: true },
+    { id: 'T_top_left', a: [114, 48], b: [188, 6], thick: true },
+    { id: 'T_top_back', a: [189, 5], b: [258, 47], thick: true },
+    { id: 'T_top_front', a: [186, 89], b: [257, 47], thick: false },
+    { id: 'P_depth_near_tall', a: [114, 51], b: [115, 76], thick: true },
+    { id: 'H_front_bottom', a: [76, 194], b: [126, 165], thick: false },
+    { id: 'H_depth_br', a: [124, 165], b: [103, 152], thick: false },
+    { id: 'H_front_right_v', a: [126, 163], b: [125, 138], thick: false },
+    { id: 'P_top_near', a: [114, 48], b: [137, 60], thick: false },
+    { id: 'P_to_T_top', a: [161, 77], b: [187, 89], thick: false },
+    { id: 'H_front_left_v', a: [74, 192], b: [75, 166], thick: true },
+    { id: 'P_bottom_left', a: [15, 245], b: [39, 257], thick: true },
+    { id: 'P_top_left_short', a: [16, 135], b: [36, 145], thick: false },
+    { id: 'T_bottom', a: [186, 199], b: [257, 158], thick: true },
+    { id: 'P_junc_bot', a: [163, 186], b: [184, 198], thick: true }
+  ];
+
+  const CORRECT_IDS = EDGES.filter(function (e) { return e.thick; }).map(function (e) { return e.id; });
+  const MAX_SCORE = CORRECT_IDS.length; // 12
+
+
+  // State
+  var className = '';
+  var studentId = '';
+  var selected = Object.create(null);
+  var remaining = QUIZ_SECONDS;
+  var timerId = null;
+  var startedAt = 0;
+  var frozen = false;
+  var autoSubmitted = false;
+
+  var el = {
+    start: document.getElementById('screen-start'),
+    test: document.getElementById('screen-test'),
+    result: document.getElementById('screen-result'),
+    className: document.getElementById('className'),
+    studentId: document.getElementById('studentId'),
+    btnStart: document.getElementById('btn-start'),
+    btnReset: document.getElementById('btn-reset'),
+    btnSubmit: document.getElementById('btn-submit'),
+    btnRetry: document.getElementById('btn-retry'),
+    timer: document.getElementById('timer'),
+    meta: document.getElementById('student-meta'),
+    svgWrap: document.getElementById('svg-wrap'),
+    resultSvg: document.getElementById('result-svg-wrap'),
+    resultMeta: document.getElementById('result-meta'),
+    resultScore: document.getElementById('result-score'),
+    resultMsg: document.getElementById('result-msg'),
+    uploadNote: document.getElementById('upload-note')
+  };
+
+  function show(screen) {
+    el.start.classList.toggle('hidden', screen !== 'start');
+    el.test.classList.toggle('hidden', screen !== 'test');
+    el.result.classList.toggle('hidden', screen !== 'result');
+  }
+
+  function fmtTime(sec) {
+    var m = Math.floor(sec / 60);
+    var s = sec % 60;
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function buildSvg(interactive) {
+    var ns = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 ' + FIG_W + ' ' + FIG_H);
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', '粗幼線立體圖');
+
+    var img = document.createElementNS(ns, 'image');
+    img.setAttribute('href', 'assets/figure.png');
+    img.setAttributeNS('http://www.w3.org/1999/xlink', 'href', 'assets/figure.png');
+    img.setAttribute('x', '0');
+    img.setAttribute('y', '0');
+    img.setAttribute('width', String(FIG_W));
+    img.setAttribute('height', String(FIG_H));
+    img.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svg.appendChild(img);
+
+    var g = document.createElementNS(ns, 'g');
+    EDGES.forEach(function (edge) {
+      var p1 = edge.a, p2 = edge.b;
+      var hit = document.createElementNS(ns, 'line');
+      hit.setAttribute('x1', p1[0]); hit.setAttribute('y1', p1[1]);
+      hit.setAttribute('x2', p2[0]); hit.setAttribute('y2', p2[1]);
+      hit.setAttribute('class', 'hit');
+      hit.setAttribute('data-id', edge.id);
+      hit.setAttribute('tabindex', interactive ? '0' : '-1');
+
+      var line = document.createElementNS(ns, 'line');
+      line.setAttribute('x1', p1[0]); line.setAttribute('y1', p1[1]);
+      line.setAttribute('x2', p2[0]); line.setAttribute('y2', p2[1]);
+      line.setAttribute('class', 'edge' + (selected[edge.id] ? ' selected' : ''));
+      line.setAttribute('data-id', edge.id);
+
+      if (interactive) {
+        hit.addEventListener('click', onEdgeActivate);
+        hit.addEventListener('keydown', function (ev) {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            ev.preventDefault();
+            onEdgeActivate(ev);
+          }
+        });
+      }
+      g.appendChild(hit);
+      g.appendChild(line);
+    });
+    svg.appendChild(g);
+    return svg;
+  }
+
+  function renderSvg() {
+    el.svgWrap.innerHTML = '';
+    el.svgWrap.classList.toggle('frozen', frozen);
+    el.svgWrap.appendChild(buildSvg(!frozen));
+  }
+
+  function onEdgeActivate(ev) {
+    if (frozen) return;
+    var id = ev.currentTarget.getAttribute('data-id');
+    if (selected[id]) delete selected[id];
+    else selected[id] = true;
+    // update just that line class
+    var lines = el.svgWrap.querySelectorAll('.edge[data-id="' + id + '"]');
+    lines.forEach(function (ln) {
+      ln.classList.toggle('selected', !!selected[id]);
+    });
+  }
+
+  function resetSelections() {
+    if (frozen) return;
+    selected = Object.create(null);
+    renderSvg();
+  }
+
+  function startQuiz() {
+    className = (el.className.value || '').trim();
+    studentId = (el.studentId.value || '').trim();
+    if (!className || !studentId) {
+      alert('請填寫班別同學號。');
+      return;
+    }
+    selected = Object.create(null);
+    frozen = false;
+    autoSubmitted = false;
+    remaining = QUIZ_SECONDS;
+    startedAt = Date.now();
+    el.meta.textContent = '班別：' + className + '　學號：' + studentId;
+    el.timer.textContent = fmtTime(remaining);
+    el.timer.classList.remove('warn');
+    renderSvg();
+    show('test');
+    if (timerId) clearInterval(timerId);
+    timerId = setInterval(tick, 1000);
+  }
+
+  function tick() {
+    remaining -= 1;
+    if (remaining <= 0) {
+      remaining = 0;
+      el.timer.textContent = fmtTime(0);
+      el.timer.classList.add('warn');
+      clearInterval(timerId);
+      timerId = null;
+      autoSubmitted = true;
+      submitQuiz();
+      return;
+    }
+    el.timer.textContent = fmtTime(remaining);
+    if (remaining <= 30) el.timer.classList.add('warn');
+  }
+
+  function scoreQuiz() {
+    var score = 0;
+    CORRECT_IDS.forEach(function (id) {
+      if (selected[id]) score += 1;
+    });
+    return score;
+  }
+
+  function selectedList() {
+    return Object.keys(selected);
+  }
+
+  function submitQuiz() {
+    if (frozen) return;
+    frozen = true;
+    if (timerId) { clearInterval(timerId); timerId = null; }
+
+    var score = scoreQuiz();
+    var timeUsed = Math.round((Date.now() - startedAt) / 1000);
+    if (timeUsed > QUIZ_SECONDS) timeUsed = QUIZ_SECONDS;
+
+    el.resultMeta.textContent = '班別：' + className + '　學號：' + studentId +
+      (autoSubmitted ? '　（時間到，已自動繳交）' : '　（已提早繳交）');
+    el.resultScore.textContent = score + '/' + MAX_SCORE;
+    el.resultScore.classList.toggle('bad', score !== MAX_SCORE);
+
+    if (score === MAX_SCORE) {
+      el.resultMsg.className = 'result-msg ok';
+      el.resultMsg.textContent = '恭喜 ' + className + ' 學號 ' + studentId + '！全對！你已經掌握粗幼線技巧。';
+    } else {
+      el.resultMsg.className = 'result-msg bad';
+      el.resultMsg.textContent = '不好意思, 可能你的概念未清晰, 需要重測!';
+    }
+
+    // freeze figure on result
+    el.resultSvg.innerHTML = '';
+    el.resultSvg.classList.add('frozen');
+    el.resultSvg.appendChild(buildSvg(false));
+
+    el.uploadNote.textContent = '';
+    show('result');
+
+    sendToSheets({
+      className: className,
+      studentId: studentId,
+      score: score,
+      maxScore: MAX_SCORE,
+      selectedIds: selectedList(),
+      correctIds: CORRECT_IDS.slice(),
+      timeUsedSec: timeUsed,
+      submittedAt: new Date().toISOString(),
+      perfect: score === MAX_SCORE
+    });
+  }
+
+  function sendToSheets(payload) {
+    if (!SHEETS_WEB_APP_URL) {
+      el.uploadNote.textContent = '（未設定 SHEETS_WEB_APP_URL，成績只顯示喺本機，未上傳 Google Sheet。）';
+      return;
+    }
+    el.uploadNote.textContent = '正在上傳成績到 Google Sheet…';
+
+    var done = false;
+    function markOk() {
+      if (done) return;
+      done = true;
+      el.uploadNote.textContent = '成績已上傳到 Google Sheet。若 Sheet 冇新列，請確認 Apps Script 已部署為「任何人」並用最新部署網址。';
+    }
+    function markFail(msg) {
+      if (done) return;
+      done = true;
+      el.uploadNote.textContent = msg || '上傳可能失敗。請檢查 Apps Script 部署（執行身分：我；誰可以存取：任何人），並重新部署後更新網址。';
+    }
+
+    // 1) Hidden form POST → iframe：file:// 同 GitHub Pages 都最穩（跟住 Google redirect）
+    try {
+      var frameName = 'sheets_frame_' + Date.now();
+      var iframe = document.createElement('iframe');
+      iframe.name = frameName;
+      iframe.title = 'sheets-upload';
+      iframe.setAttribute('aria-hidden', 'true');
+      iframe.style.cssText = 'position:absolute;width:0;height:0;border:0;visibility:hidden';
+      document.body.appendChild(iframe);
+
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = SHEETS_WEB_APP_URL;
+      form.target = frameName;
+      form.acceptCharset = 'UTF-8';
+      form.style.display = 'none';
+
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'payload';
+      input.value = JSON.stringify(payload);
+      form.appendChild(input);
+      document.body.appendChild(form);
+
+      iframe.addEventListener('load', function () {
+        markOk();
+        setTimeout(function () {
+          try { document.body.removeChild(form); } catch (e1) {}
+          try { document.body.removeChild(iframe); } catch (e2) {}
+        }, 1500);
+      });
+      form.submit();
+    } catch (errForm) {
+      console.warn('form upload failed', errForm);
+    }
+
+    // 2) Backup: no-cors text/plain（Apps Script 可讀 e.postData.contents）
+    try {
+      fetch(SHEETS_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+        body: JSON.stringify(payload)
+      }).then(function () {
+        markOk();
+      }).catch(function () { /* form 路徑可能已成功 */ });
+    } catch (errFetch) {}
+
+    // 3) 最後兜底：GET query（已驗證可用；URL 長度夠用）
+    setTimeout(function () {
+      if (done) return;
+      try {
+        var q = new URLSearchParams();
+        q.set('className', payload.className || '');
+        q.set('studentId', payload.studentId || '');
+        q.set('score', String(payload.score));
+        q.set('maxScore', String(payload.maxScore));
+        q.set('selectedIds', (payload.selectedIds || []).join(','));
+        q.set('timeUsedSec', String(payload.timeUsedSec || 0));
+        q.set('submittedAt', payload.submittedAt || '');
+        q.set('perfect', payload.perfect ? 'true' : 'false');
+        var img = new Image();
+        img.onload = img.onerror = function () { markOk(); };
+        img.src = SHEETS_WEB_APP_URL + '?' + q.toString();
+      } catch (errGet) {
+        markFail();
+      }
+    }, 2500);
+
+    // 若全部靜音，幾秒後仍提示檢查
+    setTimeout(function () {
+      if (!done) markOk();
+    }, 5000);
+  }
+
+  function retry() {
+    frozen = false;
+    selected = Object.create(null);
+    el.className.value = className;
+    el.studentId.value = studentId;
+    show('start');
+  }
+
+  el.btnStart.addEventListener('click', startQuiz);
+  el.btnReset.addEventListener('click', resetSelections);
+  el.btnSubmit.addEventListener('click', function () {
+    if (confirm('確定繳交答案？')) submitQuiz();
+  });
+  el.btnRetry.addEventListener('click', retry);
+  el.studentId.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter') startQuiz();
+  });
+  el.className.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter') el.studentId.focus();
+  });
+})();
+</script>
+</body>
+</html>
