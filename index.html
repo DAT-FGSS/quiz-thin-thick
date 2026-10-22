@@ -307,7 +307,7 @@
 <!-- START -->
 <section class="card screen" id="screen-start">
   <h2>開始測試</h2>
-  <p class="lead">請先輸入班別同學號。測試限時 <strong>3 分鐘</strong>：喺立體圖上面，點擊你認為<strong>應該加粗</strong>嘅邊；選錯可以再按一次取消。限時完會自動繳交。</p>
+  <p class="lead">請先輸入班別同學號。測試限時 <strong>2 分鐘</strong>：喺立體圖上面，點擊你認為<strong>應該加粗</strong>嘅邊；選錯可以再按一次取消。限時完會自動繳交。</p>
   <div class="rules">
     <strong>粗幼線法則（溫習）：</strong><br />
     · 兩邊面都見得到 → <strong>幼線</strong><br />
@@ -333,7 +333,7 @@
 <section class="card screen hidden" id="screen-test">
   <div class="test-bar">
     <div class="meta" id="student-meta"></div>
-    <div class="timer" id="timer" aria-live="polite">3:00</div>
+    <div class="timer" id="timer" aria-live="polite">2:00</div>
   </div>
   <p class="hint-bar">點擊邊線令佢變成<strong style="color:#dc2626">粗紅色</strong>＝你認為要加粗；再點一次取消。可用「重設全部」清空。</p>
   <div class="svg-wrap" id="svg-wrap">
@@ -370,7 +370,7 @@
   // ========== 設定：貼上 Google Apps Script 網頁應用程式網址 ==========
   const SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwA-uHiZTp0gwVYZtG6S9aZMub8dR-i3GIspgWF0NYFBvjAAuS5MHiO-ZmYeDTpSZh2bg/exec';
 
-  const QUIZ_SECONDS = 180;
+  const QUIZ_SECONDS = 120;
   const DAT_HOME = 'https://dat-fgss.github.io/Home/';
 
   // Edges digitized from original figure.png (269×269); PNG is the visible drawing
