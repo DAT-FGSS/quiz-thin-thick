@@ -307,7 +307,7 @@
 <!-- START -->
 <section class="card screen" id="screen-start">
   <h2>開始測試</h2>
-  <p class="lead">請先輸入班別同學號。測試限時 <strong>2 分鐘</strong>：喺立體圖上面，點擊你認為<strong>應該加粗</strong>嘅邊；選錯可以再按一次取消。限時完會自動繳交。</p>
+  <p class="lead">請先輸入班別同學號。測試限時 <strong>2 分鐘</strong>：喺立體圖上面，點擊你認為<strong>應該加粗</strong>嘅邊；選錯可以再按一次取消。誤選多餘嘅邊會扣分。限時完會自動繳交。</p>
   <div class="rules">
     <strong>粗幼線法則（溫習）：</strong><br />
     · 兩邊面都見得到 → <strong>幼線</strong><br />
@@ -560,11 +560,20 @@
   }
 
   function scoreQuiz() {
-    var score = 0;
+    // 每條正確粗線選中得 1 分；誤選不應加粗嘅邊扣 1 分（最低 0）。
+    // 避免「全選所有邊」變滿分。
+    var tp = 0;
+    var fp = 0;
+    var correctSet = Object.create(null);
+    CORRECT_IDS.forEach(function (id) { correctSet[id] = true; });
     CORRECT_IDS.forEach(function (id) {
-      if (selected[id]) score += 1;
+      if (selected[id]) tp += 1;
     });
-    return score;
+    Object.keys(selected).forEach(function (id) {
+      if (!correctSet[id]) fp += 1;
+    });
+    var score = tp - fp;
+    return score < 0 ? 0 : score;
   }
 
   function selectedList() {
